@@ -142,7 +142,7 @@ public class Lexico {
     }
     
     public static void main(String[] args) {
-       String cadena =  "25+5+13+33++5**5/5";
+       String cadena =  "11++11";
        Lexico lexico = new Lexico(cadena);
        lexico.lexico1();
        lexico.imprimir();

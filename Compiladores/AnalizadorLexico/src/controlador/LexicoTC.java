@@ -41,19 +41,15 @@ public class LexicoTC {
         switch(estado) {
             case 0: 
                 if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                    lexema += Character.toString(caracter);
+                    estado = 0;
                     if (caracter == '+') {
-                        lexema += Character.toString(caracter);
-                        estado = 0;
                         cargarLexema(lexema, TokensTC.SUMAR.toString());
                         lexema = "";
                     } else if(caracter == '-') {
-                        lexema += Character.toString(caracter);
-                        estado = 0;
                         cargarLexema(lexema, TokensTC.RESTAR.toString());
                         lexema = "";                        
                     } else if(caracter == '='){
-                        lexema += Character.toString(caracter);
-                        estado = 0;
                         cargarLexema(lexema, TokensTC.ASIGNAR.toString());
                         lexema = "";  
                     }
@@ -78,119 +74,157 @@ public class LexicoTC {
                 }                 
             break;
             case 4:
-            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter)) || Character.isLetter(caracter)) {
-                cargarLexema(lexema, TokensTC.ENTERO.toString());
-                lexema = "";
-                estado = 0;
-                lexema += Character.toString(caracter);
+            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.ENTERO.toString());
             } else if(Character.isDigit(caracter)) {
                 lexema += Character.toString(caracter);
                 estado = 4;
-            }
+            } else if(Character.isLetter(caracter)) {
+                cargarLexema(lexema, TokensTC.ENTERO.toString());
+                lexema = "";
+                if (caracter == 'p') {
+                    estado = 8;
+                    lexema += Character.toString(caracter);
+                } else {
+                    estado = 6;
+                    lexema += Character.toString(caracter);
+                }
+            } 
             break;
             case 6:
-            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter)) || Character.isDigit(caracter)) {
-                if (caracter == '+') {
-                        
-                        estado = 0;
-                        cargarLexema(lexema, TokensTC.SUMAR.toString());
-                        lexema = "";
-                    } else if(caracter == '-') {
-                        lexema += Character.toString(caracter);
-                        estado = 0;
-                        cargarLexema(lexema, TokensTC.RESTAR.toString());
-                        lexema = "";                        
-                    } else if(caracter == '='){
-                        lexema += Character.toString(caracter);
-                        estado = 0;
-                        cargarLexema(lexema, TokensTC.ASIGNAR.toString());
-                        lexema = "";  
-                    }
-            }else if(caracter == 'p'){
-                estado = 8;
+            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.LETRA.toString());
+            }else if(Character.isDigit(caracter)){
                 lexema += Character.toString(caracter);
-            } else {
-                estado = 6;
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 4;
+                lexema = "";
+            } else if(Character.isLetter(caracter)){
                 lexema += Character.toString(caracter);
+                 if(caracter == 'p'){
+                    estado = 8;
+                } else {
+                    estado = 6;
+                }
             }
             break;
-            case 8:
-            if(caracter == 'r') {
-                estado = 9;
-                lexema += Character.toString(caracter);
-            } else if(Character.isLetter(caracter)) {
-                estado = 6;
-                lexema += Character.toString(caracter);
-            } else {
+            case 8:  
+            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.LETRA.toString());
+            } else if(Character.isDigit(caracter)) {
                 cargarLexema(lexema, TokensTC.LETRA.toString());
                 lexema = "";
-                estado = 0;
                 lexema += Character.toString(caracter);
+                estado = 4;
+            } else if(Character.isLetter(caracter)) {
+                 lexema += Character.toString(caracter);
+                if(caracter == 'r') {
+                    estado = 9;
+                } else {
+                    estado = 6;
+                }  
             }
             break;
             case 9:
-            if(caracter == 'i') {
-                estado = 10;
-                lexema += Character.toString(caracter);
-            } else if(Character.isLetter(caracter)) {
-                estado = 6;
-                lexema += Character.toString(caracter);
-            } else {
+             if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.LETRA.toString());
+            } else if(Character.isDigit(caracter)) {
                 cargarLexema(lexema, TokensTC.LETRA.toString());
                 lexema = "";
-                estado = 0;
                 lexema += Character.toString(caracter);
-            }
+                estado = 4;
+            } else if(Character.isLetter(caracter)) {
+                 lexema += Character.toString(caracter);
+                if(caracter == 'i') {
+                    estado = 10;
+                } else {
+                    estado = 6;
+                }  
+            }  
             break;
             case 10:
-            if(caracter == 'n') {
-                estado = 11;
-                lexema += Character.toString(caracter);
-            } else if(Character.isLetter(caracter)) {
-                estado = 6;
-                lexema += Character.toString(caracter);
-            } else {
+            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.LETRA.toString());
+            } else if(Character.isDigit(caracter)) {
                 cargarLexema(lexema, TokensTC.LETRA.toString());
                 lexema = "";
-                estado = 0;
                 lexema += Character.toString(caracter);
+                estado = 4;
+            } else if(Character.isLetter(caracter)) {
+                 lexema += Character.toString(caracter);
+                if(caracter == 'n') {
+                    estado = 11;
+                } else {
+                    estado = 6;
+                }  
             }
             break; 
             case 11:
-            if(caracter == 't') {
-                lexema += Character.toString(caracter);
-                cargarLexema(lexema, TokensTC.IMPRIMIR.toString());
-                lexema = "";
-                estado = 0;       
-                lexema += Character.toString(caracter);
-            } else if(Character.isLetter(caracter)) {
-                estado = 6;
-                lexema += Character.toString(caracter);
-            } else {
+            if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
+                definirSigno(TokensTC.LETRA.toString());
+            } else if(Character.isDigit(caracter)) {
                 cargarLexema(lexema, TokensTC.LETRA.toString());
                 lexema = "";
-                estado = 0;
                 lexema += Character.toString(caracter);
-            }
+                estado = 4;
+            } else if(Character.isLetter(caracter)) {
+                 lexema += Character.toString(caracter);
+                if(caracter == 't') {
+                    cargarLexema(lexema, TokensTC.IMPRIMIR.toString());
+                    estado = 0; 
+                    lexema = "";
+                } else {
+                    estado = 6;
+                }  
+            }  
             break;  
             default:break;
         }
         posicion++;
         if(posicion >= entrada.length()) {
-            
+            if(estado == 4) {
+                cargarLexema(lexema, TokensTC.ENTERO.toString());
+            } else if (estado == 6 || estado == 8 || estado == 9 || estado == 10 || estado == 11) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+            } 
         } else {
             proceso();
-        } 
+        }    
     }
     
     private void cargarLexema(String lexema, String token) {
        lexemas.add(lexema);
        tokens.add(token);
     }
-        
+    
+    private void definirSigno(String tipoToken) {
+        if (caracter == '+') {
+            cargarLexema(lexema, tipoToken);
+            estado = 0;
+            lexema = "";
+            lexema += Character.toString(caracter);
+            cargarLexema(lexema,TokensTC.SUMAR.toString());
+            lexema = ""; 
+        } else if(caracter == '-') {
+            cargarLexema(lexema, tipoToken);
+            estado = 0;
+            lexema = "";
+            lexema += Character.toString(caracter);
+            cargarLexema(lexema, TokensTC.RESTAR.toString());
+            lexema = "";                      
+        } else if(caracter == '='){
+            cargarLexema(lexema, tipoToken);
+            estado = 0;
+            lexema = "";
+            lexema += Character.toString(caracter);
+            cargarLexema(lexema, TokensTC.ASIGNAR.toString());
+            lexema = "";
+        }
+    }
+    
     public static void main(String args[]) {
         // TODO code application logic here
-        String cadena = "var x = 1";
+        String cadena = "var x = 2prin1 print x";
         LexicoTC lexico = new LexicoTC(cadena);
         lexico.proceso();
         lexico.imprimir();
