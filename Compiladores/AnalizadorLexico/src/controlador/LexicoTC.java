@@ -71,7 +71,12 @@ public class LexicoTC {
                         estado = 6;
                         lexema += Character.toString(caracter);
                     }
-                }                 
+                } else if(!Character.isSpaceChar(caracter)) {
+                    estado = 0;
+                    lexema += Character.toString(caracter);
+                    cargarLexema(lexema, TokensTC.ERROR.toString());
+                    lexema = ""; 
+                }             
             break;
             case 4:
             if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
@@ -88,7 +93,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                     lexema += Character.toString(caracter);
-                }
+                } 
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.ENTERO.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
             } 
             break;
             case 6:
@@ -106,7 +118,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                 }
-            }
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
+            } 
             break;
             case 8:  
             if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
@@ -123,7 +142,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                 }  
-            }
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
+            } 
             break;
             case 9:
              if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
@@ -140,7 +166,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                 }  
-            }  
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
+            } 
             break;
             case 10:
             if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
@@ -157,7 +190,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                 }  
-            }
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
+            } 
             break; 
             case 11:
             if(u.verificarChar(u.obtenerSignos(),String.valueOf(caracter))) {
@@ -176,7 +216,14 @@ public class LexicoTC {
                 } else {
                     estado = 6;
                 }  
-            }  
+            } else if(!Character.isSpaceChar(caracter)) {
+                cargarLexema(lexema, TokensTC.LETRA.toString());
+                estado = 0;
+                lexema = ""; 
+                lexema += Character.toString(caracter);
+                cargarLexema(lexema, TokensTC.ERROR.toString());
+                lexema = ""; 
+            } 
             break;  
             default:break;
         }
@@ -223,8 +270,7 @@ public class LexicoTC {
     }
     
     public static void main(String args[]) {
-        // TODO code application logic here
-        String cadena = "var x = 2prin1 print x";
+        String cadena = "var a = 9/8 + 56 print a";
         LexicoTC lexico = new LexicoTC(cadena);
         lexico.proceso();
         lexico.imprimir();
