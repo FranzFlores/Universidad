@@ -270,7 +270,7 @@ public class LexicoTC {
     }
     
     public static void main(String args[]) {
-        String cadena = "var a = 9/8 + 56 print a";
+        String cadena = "var a, = 98 + 56 print a";
         LexicoTC lexico = new LexicoTC(cadena);
         lexico.proceso();
         lexico.imprimir();
