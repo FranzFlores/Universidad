@@ -46,7 +46,7 @@ public class AnalizadorLexico {
     }
     
     public static void main(String[] args) {
-        String input = "2 * 5 / 6 -4 * 8";
+        String input = "2 * 5 / 6 -þ4 * 8";
         List<Token> lista = lexico(input);
         for (Token token: lista) {
             System.out.println(token.getTipos().toString() + " " + token.getValor());
